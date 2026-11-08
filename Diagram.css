@@ -1,0 +1,117 @@
+/*
+ * Diagram.css
+ * Formal Black & White Technical Styling for US Letter (8.5in x 11in) Manuscript Diagram.
+ */
+
+@page {
+  size: 8.5in 11in;
+  margin: 0.4in;
+}
+
+.diagram-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background-color: #f4f4f5;
+  padding: 1.5rem 1rem;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.diagram-toolbar {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.print-button {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s ease-in-out;
+}
+
+.print-button:hover {
+  background-color: #333333;
+}
+
+.diagram-svg-wrapper {
+  background-color: #ffffff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e4e4e7;
+  padding: 0.25in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.diagram-svg {
+  width: 100%;
+  max-width: 7.7in;
+  height: auto;
+  max-height: 10.2in;
+  display: block;
+  background-color: #ffffff;
+}
+
+.section-heading-text {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 11px;
+  font-weight: bold;
+  fill: #000000;
+  letter-spacing: 0.2px;
+}
+
+.edge-label-text {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 7.5px;
+  fill: #000000;
+}
+
+@media print {
+  body {
+    background-color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .diagram-page-container {
+    background-color: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: auto !important;
+  }
+
+  .diagram-toolbar {
+    display: none !important;
+  }
+
+  .diagram-svg-wrapper {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .diagram-svg {
+    width: 7.7in !important;
+    height: 10.2in !important;
+    max-width: 7.7in !important;
+    max-height: 10.2in !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
