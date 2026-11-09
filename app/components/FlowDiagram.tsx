@@ -20,8 +20,14 @@ import CorridorEdge from './edges/CorridorEdge';
 import DiagramToolbar from './ui/DiagramToolbar';
 import DiagramSidebar from './ui/DiagramSidebar';
 import { getLayoutedElements } from '../layoutHelper';
+import { downloadDiagramAsPng } from '../utils/downloadPng';
 
-function FlowDiagramContent() {
+interface FlowDiagramProps {
+  activeTab: 'flowchart' | 'block';
+  onTabChange: (tab: 'flowchart' | 'block') => void;
+}
+
+function FlowDiagramContent({ activeTab, onTabChange }: FlowDiagramProps) {
   const { nodes: initialNodes, edges: initialEdges, sectionHeadings, sectionBounds } = useMemo(
     () => getLayoutedElements(),
     []
@@ -82,19 +88,27 @@ function FlowDiagramContent() {
     URL.revokeObjectURL(url);
   }, []);
 
+  // Download PNG with solid crisp white background
+  const handleDownloadPng = useCallback(() => {
+    downloadDiagramAsPng(nodes, 'arvalink-workflow.png', 60, 2);
+  }, [nodes]);
+
   const handlePrint = useCallback(() => {
     window.print();
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-white overflow-hidden">
+    <div className="w-full h-full flex flex-col bg-white overflow-hidden">
       {/* Top Navigation Toolbar */}
       <DiagramToolbar
+        activeTab={activeTab}
+        onTabChange={onTabChange}
         onZoomIn={() => zoomIn({ duration: 300 })}
         onZoomOut={() => zoomOut({ duration: 300 })}
         onFitView={() => fitView({ padding: 0.15, duration: 600 })}
         onResetView={() => setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 400 })}
         onDownloadSvg={handleDownloadSvg}
+        onDownloadPng={handleDownloadPng}
         onPrint={handlePrint}
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         isSidebarOpen={isSidebarOpen}
@@ -140,10 +154,10 @@ function FlowDiagramContent() {
   );
 }
 
-export default function FlowDiagram() {
+export default function FlowDiagram({ activeTab, onTabChange }: FlowDiagramProps) {
   return (
     <ReactFlowProvider>
-      <FlowDiagramContent />
+      <FlowDiagramContent activeTab={activeTab} onTabChange={onTabChange} />
     </ReactFlowProvider>
   );
 }
